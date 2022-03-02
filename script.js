@@ -1,3 +1,5 @@
+//let lettoreDiFile = new FileReader();
+
 function initWebsite(){
     loadSettings();
     loadPages();
@@ -51,14 +53,13 @@ function setFooterLinks(linkArray){
 }
 
 function loadPages() {
-    fetch("./assets/settings/pages_new.json")
+    fetch("./assets/settings/pages_new_new_new.json")
     .then(res => res.json())
     .then(configurePages);
 }
 
 function configurePages(pageSetting) {
     setNavMenu(pageSetting)
-
 
     const paramsString = window.location.search;
     const params = new URLSearchParams(paramsString);
@@ -71,11 +72,19 @@ function configurePages(pageSetting) {
 }
 
 function createPage(page){
+    //const container = document.getElementById('page-container');
+    // for (const element of page.content) {
+    //     const htmlElement = createHtmlElement(element);
+    //     container.appendChild(htmlElement);
+    // }
+    //container.innerHTML = marked.parse(page.content);
+    fetch(page.contentUrl).then(res => res.text()).then(content)
+}
+
+function content(text) {
+    console.log(text);
     const container = document.getElementById('page-container');
-    for (const element of page.content) {
-        const htmlElement = createHtmlElement(element);
-        container.appendChild(htmlElement);
-    }
+    container.innerHTML = marked.parse(text);
 }
 
 
@@ -139,3 +148,10 @@ function createDIV(elementSetting){
     }
     return div
 }
+
+// function logParser(content) {
+//     const converter = new showdown.Converter();
+//     const text      = content;
+//     const html      = converter.makeHtml(text);
+//     console.log(html);
+// }
